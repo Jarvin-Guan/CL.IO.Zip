@@ -27,7 +27,7 @@ namespace Test
         {
             string fromDic = this.DebugPath+ @"\"+ this.DicName;
             string toZip = this.tempPath + @"\" + this.FileName;
-            ZipHandler.PageFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); }); 
+            ZipHandler.PackFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); }); 
             Assert.IsTrue(File.Exists(toZip));
             File.Delete(toZip);
         }

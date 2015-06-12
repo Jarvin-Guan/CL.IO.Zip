@@ -21,7 +21,7 @@ namespace JarvinZip
         /// </summary>
         /// <param name="fileToZip">要进行压缩的文件名</param>
         /// <param name="zipedFile">压缩后生成的压缩文件名</param>
-        public static void PageFile(string fileToZip, string zipedFile)
+        public static void PackFile(string fileToZip, string zipedFile)
         {
             //如果文件没有找到，则报错
             if (!File.Exists(fileToZip))
@@ -53,11 +53,13 @@ namespace JarvinZip
         }
 
         /// <summary>
-        /// 压缩多层目录
+        /// pake
         /// </summary>
-        /// <param name="strDirectory">The directory.</param>
-        /// <param name="zipedFile">The ziped file.</param>
-        public static void PageFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)
+        /// <param name="strDirectory"></param>
+        /// <param name="zipedFile"></param>
+        /// <param name="changedDG"></param>
+ 
+        public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)
         {
             using (System.IO.FileStream ZipFile = System.IO.File.Create(zipedFile))
             {
@@ -67,7 +69,7 @@ namespace JarvinZip
                     double totalCount = Directory.GetFileSystemEntries(strDirectory, "*", SearchOption.AllDirectories).Count();
                     string key=System.Guid.NewGuid().ToString(); //Guid Key
                     ProcessItems.Add(key, new ProcessItem(totalCount));
-                    PageSetp(strDirectory, s, "", key, changedDG);
+                    PackSetp(strDirectory, s, "", key, changedDG);
                     ProcessItems.Remove(key);
                 }
             }
@@ -77,7 +79,7 @@ namespace JarvinZip
         /// <summary>
         /// 递归遍历目录
         /// </summary>
-        private static void PageSetp(string strDirectory, ZipOutputStream s, string parentPath,string processItemKey,PackProcessChange changedDG)
+        private static void PackSetp(string strDirectory, ZipOutputStream s, string parentPath,string processItemKey,PackProcessChange changedDG)
         {
             if (strDirectory[strDirectory.Length - 1] != Path.DirectorySeparatorChar)
             {
@@ -96,7 +98,7 @@ namespace JarvinZip
                     string pPath = parentPath;
                     pPath += file.Substring(file.LastIndexOf(Path.DirectorySeparatorChar) + 1);
                     pPath += Path.DirectorySeparatorChar;
-                    PageSetp(file, s, pPath,processItemKey,changedDG);
+                    PackSetp(file, s, pPath,processItemKey,changedDG);
                     if (changedDG != null)
                     {
                         changedDG(AddOneAndReport(processItemKey));
