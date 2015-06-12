@@ -1,0 +1,7 @@
+\\psf\Home\Desktop\JarvinZip\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+\\psf\Home\Desktop\JarvinZip\Test\bin\Debug\Test.dll
+\\psf\Home\Desktop\JarvinZip\Test\bin\Debug\Test.pdb
+\\psf\Home\Desktop\JarvinZip\Test\bin\Debug\JarvinZip.dll
+\\psf\Home\Desktop\JarvinZip\Test\bin\Debug\JarvinZip.pdb
+\\psf\Home\Desktop\JarvinZip\Test\obj\Debug\Test.dll
+\\psf\Home\Desktop\JarvinZip\Test\obj\Debug\Test.pdb

@@ -1,0 +1,5 @@
+\\psf\Home\Desktop\JarvinZip\JarvinZip\bin\Debug\JarvinZip.dll
+\\psf\Home\Desktop\JarvinZip\JarvinZip\bin\Debug\JarvinZip.pdb
+\\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.csprojResolveAssemblyReference.cache
+\\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.dll
+\\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.pdb
