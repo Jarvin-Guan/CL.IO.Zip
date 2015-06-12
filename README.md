@@ -3,12 +3,6 @@ JarvinZipLib is a Zip library written in C# for the .NET platform. it provide pr
 
 # PackDirectory
 Statement:
-  /// <summary>
-  /// pack directory
-  /// </summary>
-  /// <param name="strDirectory">The directory path you want to zip</param>
-  /// <param name="zipedFile">Target zipFile Path</param>
-  /// <param name="changedDG">report process delegate</param>
   public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)
 
 Use:
@@ -19,12 +13,6 @@ Use:
   
 # UnPackZip
 Statement:
-  /// <summary>
-  /// unPack zipFile
-  /// </summary>
-  /// <param name="zipFilePath">the path of zipFile</param>
-  /// <param name="unZipFile">to Directory</param>
-  /// <param name="changedDG">report process delegate</param>
   public static void UnpackFiles(string zipFilePath, string unZipFile, UnPackProcessChange changedDG)
 
 Use:
