@@ -1,21 +1,24 @@
 # JarvinZipLib
 JarvinZipLib is a Zip library written in C# for the .NET platform. it provide process delegate.
 
-# PackDirectory
-Statement:
-  public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)
+## PackDirectory
+###Statement:(class:ZipHandler)
+  <code>public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)</code>
 
-Use:
-  var fromDic="The directory path you want to zip";
-  var toZip="Target zipFile Path";
-  ZipHandler.PageFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("pack num:" + num); }); 
+### Use:
+  <code>var fromDic="The directory path you want to zip";</code>
+  
+  <code>var toZip="Target zipFile Path";</code>
+  
+  <code>ZipHandler.PageFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("pack num:" + num); }); 
+  </code>
   
   
-# UnPackZip
-Statement:
-  public static void UnpackFiles(string zipFilePath, string unZipFile, UnPackProcessChange changedDG)
+## UnPackZip
+###Statement:(class:ZipHandler)
+  <code>public static void UnpackFiles(string zipFilePath, string unZipFile, UnPackProcessChange changedDG)</code>
 
-Use:
-  var fromZip="The zipFile path";
-  var toDic="Target directory Path";
-  ZipHandler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("unpack num:" + num); });
+###Use:
+  <code>var fromZip="The zipFile path";</code>
+  <code>var toDic="Target directory Path";</code>
+  <code>ZipHandler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("unpack num:" + num); });</code>
