@@ -5,3 +5,10 @@
 \\psf\Home\Desktop\JarvinZip\Test\bin\Debug\JarvinZip.pdb
 \\psf\Home\Desktop\JarvinZip\Test\obj\Debug\Test.dll
 \\psf\Home\Desktop\JarvinZip\Test\obj\Debug\Test.pdb
+Z:\Users\jarvin\git\JarvinZipLib\Test\bin\Debug\Test.dll
+Z:\Users\jarvin\git\JarvinZipLib\Test\bin\Debug\Test.pdb
+Z:\Users\jarvin\git\JarvinZipLib\Test\bin\Debug\JarvinZip.dll
+Z:\Users\jarvin\git\JarvinZipLib\Test\bin\Debug\JarvinZip.pdb
+Z:\Users\jarvin\git\JarvinZipLib\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+Z:\Users\jarvin\git\JarvinZipLib\Test\obj\Debug\Test.dll
+Z:\Users\jarvin\git\JarvinZipLib\Test\obj\Debug\Test.pdb

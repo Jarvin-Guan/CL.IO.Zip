@@ -17,17 +17,27 @@ namespace Test
             this.tempPath = this.DebugPath+@"\tmp";
         }
 
+        ZipHandler handler = ZipHandler.GetInstance();
         private string DebugPath { set; get; }
 
         private string FileName { set; get; }
         private string DicName { set; get; }
         private string tempPath { set; get; }
         [TestMethod]
+        public void PackFileTest ()
+        {
+            string fromDic = this.DebugPath + @"\" + this.DicName;
+            string toZip = this.tempPath + @"\" + this.FileName;
+            //ZipHandler.PackFile(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); });
+            Assert.IsTrue(File.Exists(toZip));
+            File.Delete(toZip);
+        }
+        [TestMethod]
         public void PackDirectoryTest()
         {
             string fromDic = this.DebugPath+ @"\"+ this.DicName;
             string toZip = this.tempPath + @"\" + this.FileName;
-            ZipHandler.PackFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); }); 
+            handler.PackFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); }); 
             Assert.IsTrue(File.Exists(toZip));
             File.Delete(toZip);
         }
@@ -37,7 +47,8 @@ namespace Test
         {
             string fromZip = this.DebugPath + @"\" + this.FileName;
             string toDic = this.tempPath + @"\" + this.DicName;
-            ZipHandler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("解压进度:" + num); });
+            handler.IsKeepPath = false;
+            handler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("解压进度:" + num); });
             Assert.IsTrue(Directory.Exists(toDic));
             Directory.Delete(toDic,true);
         }

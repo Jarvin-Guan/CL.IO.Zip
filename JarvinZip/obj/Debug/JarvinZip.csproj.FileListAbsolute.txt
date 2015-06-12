@@ -3,3 +3,8 @@
 \\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.csprojResolveAssemblyReference.cache
 \\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.dll
 \\psf\Home\Desktop\JarvinZip\JarvinZip\obj\Debug\JarvinZip.pdb
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\JarvinZip.csprojResolveAssemblyReference.cache
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\JarvinZip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\JarvinZip.pdb
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\JarvinZip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\JarvinZip.pdb

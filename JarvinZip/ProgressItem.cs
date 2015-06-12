@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace JarvinZip
@@ -11,8 +10,10 @@ namespace JarvinZip
         public ProcessItem(double NeedHandleCount)
         {
             this.NeedHandleCount = NeedHandleCount;
+            this.HandledFiles = new List<string>();
         }
         public double NeedHandleCount { set; get; }
         public double HadHandleCount { set; get; }
+        public List<string> HandledFiles { set; get; }
     }
 }
