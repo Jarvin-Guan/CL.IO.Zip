@@ -183,19 +183,46 @@ namespace JarvinZip
         /// unPack zipFile
         /// </summary>
         /// <param name="zipFilePath">the path of zipFile</param>
-        /// <param name="unZipFile">to Directory</param>
+        /// <param name="unzipPath">to Directory</param>
         /// <param name="changedDG">report process delegate</param>
-        public  void UnpackFiles(string zipFilePath, string unZipFile, ProcessChange changedDG)
+        public  void UnpackAll(string zipFilePath, string unzipPath, ProcessChange changedDG)
         {
             //总需要压缩的文件数量
             double totalCount = GetZipFileSystemCount(zipFilePath);
             string key = System.Guid.NewGuid().ToString(); //Guid Key
             ProcessItems.Add(key, new ProcessItem(totalCount));
+            UnpackFiles(zipFilePath, unzipPath, changedDG, "*", key);
+            ProcessItems.Remove(key);
+        }
+        
+        public void UnpackFile(string zipFilePath,string unzipPath,string filePathInZip)
+        {
+            UnpackFiles(zipFilePath, unzipPath,null,filePathInZip);
+        }
 
+        public void UnpackDirectory(string zipFilePath, string unzipPath, string DicPathInZip)
+        {
+            UnpackFiles(zipFilePath, unzipPath, null, DicPathInZip); 
+        }
+
+        /// <summary>
+        /// 解压基类
+        /// </summary>
+        /// <param name="zipFilePath">压缩包文件路径</param>
+        /// <param name="unzipPath">解压到的文件路径</param>
+        /// <param name="changedDG">进度反馈委托</param>
+        /// <param name="directoryName">解压指定的文件或文件夹，默认为空（所有）</param>
+        private void UnpackFiles(string zipFilePath, string unzipPath,
+            ProcessChange changedDG = null, string directName = "*", string processKey = "")
+        {
             #region unzip
-            if (unZipFile[unZipFile.Length - 1] != Path.DirectorySeparatorChar)
+            if (unzipPath[unzipPath.Length - 1] != Path.DirectorySeparatorChar)
             {
-                unZipFile = unZipFile + Path.DirectorySeparatorChar;
+                unzipPath = unzipPath + Path.DirectorySeparatorChar;
+            }
+            if(!Directory.Exists(unzipPath))
+            {
+                Directory.CreateDirectory(unzipPath);
             }
             using (ZipInputStream zipStream = new ZipInputStream(File.OpenRead(zipFilePath)))
             {
@@ -207,9 +234,14 @@ namespace JarvinZip
                     string fileName = Path.GetFileName(zipEntry.Name);
                     if (!string.IsNullOrEmpty(directoryName))
                     {
-                        if (!Directory.Exists(unZipFile + directoryName))
+                        if (!Directory.Exists(unzipPath + directoryName))
                         {
-                            Directory.CreateDirectory(unZipFile + directoryName);
+                            if (directName != "*" && !Path.HasExtension(directName) && !directoryName.StartsWith(directName))
+                            { continue; }
+                            if(IsKeepPath)
+                            {
+                                Directory.CreateDirectory(unzipPath + directoryName);
+                            }
                         }
                     }
                     if (!string.IsNullOrEmpty(fileName))
@@ -218,36 +250,51 @@ namespace JarvinZip
                             break;
                         if (zipEntry.IsDirectory)
                         {
-                            directoryName = Path.GetDirectoryName(unZipFile + zipEntry.Name);
+                            directoryName = Path.GetDirectoryName(unzipPath + zipEntry.Name);
                         }
                         string zipFileName = !IsKeepPath ? Path.GetFileName(zipEntry.Name) : zipEntry.Name;
-                        using (FileStream stream = File.Create(unZipFile + zipFileName))
+                        if (directName != "*" && !Path.HasExtension(directName) && !zipEntry.Name.StartsWith(directName))
+                        { continue; }
+                        if (Path.HasExtension(directName) && directName == zipEntry.Name)
                         {
-                            byte[] buffer = new byte[2048];
-                            while (true)
-                            {
-                                int size = zipStream.Read(buffer, 0, buffer.Length);
-                                if (size > 0)
-                                {
-                                    stream.Write(buffer, 0, size);
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                            changedDG(AddOneAndReport(key));
+                            HandleFile(unzipPath + zipFileName, zipStream, processKey, changedDG); 
+                            return;
+                        }
+                        else if (!string.IsNullOrEmpty(directName)&&
+                            !Path.HasExtension(directName))
+                        {
+                            HandleFile(unzipPath + zipFileName, zipStream, processKey, changedDG);
                         }
                     }
                 }
             }
             #endregion
-
-            ProcessItems.Remove(key);
         }
+
         #endregion
 
         #region 工具
+        private void HandleFile(string filePath, ZipInputStream zipStream, string processKey, ProcessChange changedDG)
+        {
+            using (FileStream stream = File.Create(filePath))
+            {
+                byte[] buffer = new byte[2048];
+                while (true)
+                {
+                    int size = zipStream.Read(buffer, 0, buffer.Length);
+                    if (size > 0)
+                    {
+                        stream.Write(buffer, 0, size);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (changedDG != null)
+                    changedDG(AddOneAndReport(processKey));
+            }
+        }
         private  double AddOneAndReport(string processItemKey)
         {
             return Math.Round(((++ProcessItems[processItemKey].HadHandleCount)

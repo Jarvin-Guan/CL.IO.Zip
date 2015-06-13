@@ -14,7 +14,7 @@ namespace Test
             this.DebugPath = Path.GetDirectoryName(typeof(ZipTest).Assembly.Location)+"\\";
             this.FileName =  @"Zipfile.zip";
             this.DicName =  @"ZipDIC";
-            this.tempPath = this.DebugPath+@"\tmp\";
+            this.tempPath = this.DebugPath+@"tmp\";
         }
 
         ZipHandler handler = ZipHandler.GetInstance();
@@ -65,11 +65,32 @@ namespace Test
         {
             string fromZip = this.DebugPath + this.FileName;
             string toDic = this.tempPath + this.DicName;
-            handler.IsKeepPath = false;
-            handler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("解压进度:" + num); });
+            handler.IsKeepPath = true;
+            handler.UnpackAll(fromZip, toDic, (num) => { Debug.WriteLine("解压进度:" + num); });
             Assert.IsTrue(Directory.Exists(toDic));
             Directory.Delete(toDic,true);
         }
+        [TestMethod]
+        public void UnPackFileTest()
+        {
+            string fromZip = this.DebugPath + this.FileName;
+            string toDic = this.tempPath + this.DicName;
+            handler.IsKeepPath = false;
+            handler.UnpackFile(fromZip, toDic, @"models/db.js");
+            Assert.IsTrue(Directory.Exists(toDic));
+            Directory.Delete(toDic, true);
+        }
+        [TestMethod]
+        public void UnPackDicTest()
+        {
+            string fromZip = this.DebugPath + this.FileName;
+            string toDic = this.tempPath + this.DicName;
+            handler.IsKeepPath = false;
+            handler.UnpackDirectory(fromZip, toDic, @"node_modules");
+            Assert.IsTrue(Directory.Exists(toDic));
+            Directory.Delete(toDic, true);
+        }
+
         [TestCleanup]
         public void Clean()
         {
