@@ -26,8 +26,7 @@ namespace JarvinZip
         }
         #endregion
 
-        public delegate void PackProcessChange(double percent);
-        public delegate void UnPackProcessChange(double percent);
+        public delegate void ProcessChange(double percent);
         private  Dictionary<string, ProcessItem> ProcessItems = new Dictionary<string, ProcessItem>();
 
         private bool _isKeepPath = true;
@@ -38,38 +37,48 @@ namespace JarvinZip
 
         #region 压缩
         /// <summary>
-        /// 压缩单个文件
+        /// 添加单个文件到压缩包中
         /// </summary>
-        /// <param name="fileToZip">要进行压缩的文件名</param>
-        /// <param name="zipedFile">压缩后生成的压缩文件名</param>
-        public  void PackFile(string fileToZip, string zipedFile)
+        /// <param name="filePath">要压缩的文件</param>
+        /// <param name="zipPath">目标压缩包路径</param>
+        /// <param name="filePathInZip">在压缩包中文件的路径</param>
+        public  void AddFile(string filePath, string zipPath,string filePathInZip)
         {
-            //如果文件没有找到，则报错
-            if (!File.Exists(fileToZip))
+            using (ZipFile zip = new ZipFile(zipPath))
             {
-                throw new System.IO.FileNotFoundException("指定要压缩的文件: " + fileToZip + " 不存在!");
+                zip.BeginUpdate();
+                zip.Add(filePath, filePathInZip);
+                zip.CommitUpdate();
+            }
+        }
+        
+        /// <summary>
+        /// 压缩文件夹到指定zip包中
+        /// </summary>
+        /// <param name="dicPath">需要压缩的文件夹</param>
+        /// <param name="zipPath">zip包路径</param>
+        /// <param name="dicPathInZip">压缩以后文件夹在zip包中的路径</param>
+        public void AddDirectory(string dicPath,string zipPath,string dicPathInZip,ProcessChange changedDG)
+        {
+            dicPathInZip = dicPathInZip.EndsWith(Path.DirectorySeparatorChar.ToString()) ? dicPathInZip : dicPathInZip + Path.DirectorySeparatorChar;
+            var files = Directory.GetFiles(dicPath, "*", SearchOption.AllDirectories);
+            double totalCount = files.Count();
+            string key = System.Guid.NewGuid().ToString(); //Guid Key
+            ProcessItems.Add(key, new ProcessItem(totalCount));
+
+            if(!Directory.Exists(dicPath))
+            {
+                throw new ArgumentException("文件夹路径不存在");
             }
 
-            using (FileStream fs = File.OpenRead(fileToZip))
+            foreach (var file in files)
             {
-                byte[] buffer = new byte[fs.Length];
-                fs.Read(buffer, 0, buffer.Length);
-                fs.Close();
-
-                using (FileStream ZipFile = File.Create(zipedFile))
-                {
-                    using (ZipOutputStream ZipStream = new ZipOutputStream(ZipFile))
-                    {
-                        string fileName = fileToZip.Substring(fileToZip.LastIndexOf("\\") + 1);
-                        ZipEntry ZipEntry = new ZipEntry(fileName);
-                        ZipStream.PutNextEntry(ZipEntry);
-                        ZipStream.SetLevel(5);
-                        ZipStream.Write(buffer, 0, buffer.Length);
-                        ZipStream.Finish();
-                        ZipStream.Close();
-                    }
-                }
+                string filePathInZip=IsKeepPath?dicPathInZip+file.Remove(0,dicPath.Count()):
+                    dicPathInZip+Path.GetFileName(file);
+                AddFile(file, zipPath, filePathInZip);
+                changedDG(AddOneAndReport(key));
             }
+            ProcessItems.Remove(key); 
         }
 
         /// <summary>
@@ -79,7 +88,7 @@ namespace JarvinZip
         /// <param name="zipedFile">Target zipFile Path</param>
         /// <param name="changedDG">report process delegate</param>
 
-        public  void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)
+        public void PackFileDirectory(string strDirectory, string zipedFile, ProcessChange changedDG)
         {
             using (System.IO.FileStream ZipFile = System.IO.File.Create(zipedFile))
             {
@@ -99,8 +108,8 @@ namespace JarvinZip
         /// <summary>
         /// 递归遍历目录
         /// </summary>
-        private  void PackSetp(string strDirectory, ZipOutputStream s, string parentPath, 
-            string processItemKey,string zipPath, PackProcessChange changedDG)
+        private  void PackSetp(string strDirectory, ZipOutputStream s, string parentPath,
+            string processItemKey, string zipPath, ProcessChange changedDG)
         {
             if (strDirectory[strDirectory.Length - 1] != Path.DirectorySeparatorChar)
             {
@@ -176,7 +185,7 @@ namespace JarvinZip
         /// <param name="zipFilePath">the path of zipFile</param>
         /// <param name="unZipFile">to Directory</param>
         /// <param name="changedDG">report process delegate</param>
-        public  void UnpackFiles(string zipFilePath, string unZipFile, UnPackProcessChange changedDG)
+        public  void UnpackFiles(string zipFilePath, string unZipFile, ProcessChange changedDG)
         {
             //总需要压缩的文件数量
             double totalCount = GetZipFileSystemCount(zipFilePath);
