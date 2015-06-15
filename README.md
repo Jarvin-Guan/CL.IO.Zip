@@ -1,31 +1,50 @@
 # CL.IO.Zip
-CL.IO.Zip 是一个基于SharpZipLib的一个压缩和解压的类库，提供给用户在.net环境下使用（VB.NET,C#..等等）当前最新版本为：V1.1.0 
+	
+	
+	CL.IO.Zip 是一个基于SharpZipLib的一个压缩和解压的类库，提供给用户在.net环境下使用（VB.NET,C#..等等）当前最新版本为：V1.1.0 
 
 做任何操作之前，请使用单例模式，获取ZipHandler对象。
 
-  <code>ZipHandler handler = ZipHandler.GetInstance();</code>
+&nbsp;&nbsp;&nbsp;&nbsp;<code>ZipHandler handler = ZipHandler.GetInstance();</code>
 
 
 ##1.压缩
 
-### 1.1压缩整个文件夹，并且得到压缩进度。
-#### Method：PackDirectory (class:ZipHandler)
-  <code>public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)</code>
+### &nbsp;&nbsp;&nbsp;&nbsp;1.1压缩文件夹，并获取压缩进度。
+#### Method：PackDirectory 
+   &nbsp;&nbsp;&nbsp;&nbsp;<code>public void PackDirectory(string strDirectory, string zipedFile, ProcessChange changedDG)</code>
 
-### Use:
-  <code>var fromDic="The directory path you want to zip";</code>
+##### Demo
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var fromDic="E:\\ZipTest";\\\需要压缩的文件夹路径</code>
   
-  <code>var toZip="Target zipFile Path";</code>
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var toZip="E:\\ZipFile.zip";\\\生成压缩包的目标路径</code>
   
-  <code>ZipHandler.PageFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("pack num:" + num); }); 
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>handler.PackDirectory(fromDic, toZip, (num) => { Debug.WriteLine("pack num:" + num); });\\\\num为百分比，最大为100，可在此处写处理逻辑
   </code>
   
   
-## UnPackZip
-###Statement:(class:ZipHandler)
-  <code>public static void UnpackFiles(string zipFilePath, string unZipFile, UnPackProcessChange changedDG)</code>
+### &nbsp;&nbsp;&nbsp;&nbsp;1.2添加文件到zip文件中。
+#### Method：AddFile
+   &nbsp;&nbsp;&nbsp;&nbsp;<code>public  void AddFile(string filePath, string zipPath,string filePathInZip)</code>
 
-###Use:
-  <code>var fromZip="The zipFile path";</code>
-  <code>var toDic="Target directory Path";</code>
-  <code>ZipHandler.UnpackFiles(fromZip, toDic, (num) => { Debug.WriteLine("unpack num:" + num); });</code>
+##### Demo
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var filePath="E:\\ReadyToAdd.txt";\\\\需要添加到压缩包的文件路径</code>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var zipPath="E:\\ZipFile.zip";\\\压缩包文件路径</code>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>handler.AddFile(filePath, zipPath, @"123\" + Path.GetFileName(filePath));\\\需要添加到压缩包的文件路径
+  </code>
+
+### &nbsp;&nbsp;&nbsp;&nbsp;1.3添加文件夹到zip文件中。
+#### Method：PackDirectory 
+   &nbsp;&nbsp;&nbsp;&nbsp;<code>public void AddDirectory(string dicPath,string zipPath,string dicPathInZip,ProcessChange changedDG)</code>
+
+##### Demo
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var dicPath="E:\\ReadyToAddDic";\\\\需要添加到压缩包的文件夹路径</code>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var zipPath="E:\\ZipFile.zip";\\\压缩包文件路径</code>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>var dicPathInZip="ReadyToAddDic";\\\需要压缩到压缩包内的相对路径，当前值指的是根目录的ReadyToAddDic</code>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;<code>handler.AddDirectory(dicPath, zipPath, dicPathInZip,(num) => { Debug.WriteLine("压缩进度:" + num); });
+  </code>
