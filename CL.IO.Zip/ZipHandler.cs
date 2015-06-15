@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CL.IO.ZIP
+namespace CL.IO.Zip
 {
     public class ZipHandler
     {

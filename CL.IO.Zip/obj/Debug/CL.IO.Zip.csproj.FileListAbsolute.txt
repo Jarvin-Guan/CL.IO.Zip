@@ -1,0 +1,9 @@
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\CL.IO.Zip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\CL.IO.Zip.pdb
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\CL.IO.Zip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\CL.IO.Zip.pdb
+Z:\Users\jarvin\git\CL.IO.Zip\CL.IO.Zip\bin\Debug\CL.IO.Zip.dll
+Z:\Users\jarvin\git\CL.IO.Zip\CL.IO.Zip\bin\Debug\CL.IO.Zip.pdb
+Z:\Users\jarvin\git\CL.IO.Zip\CL.IO.Zip\obj\Debug\CL.IO.Zip.csprojResolveAssemblyReference.cache
+Z:\Users\jarvin\git\CL.IO.Zip\CL.IO.Zip\obj\Debug\CL.IO.Zip.dll
+Z:\Users\jarvin\git\CL.IO.Zip\CL.IO.Zip\obj\Debug\CL.IO.Zip.pdb

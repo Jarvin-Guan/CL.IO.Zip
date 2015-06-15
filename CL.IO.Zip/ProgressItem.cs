@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CL.IO.ZIP
+namespace CL.IO.Zip
 {
 
     class ProcessItem

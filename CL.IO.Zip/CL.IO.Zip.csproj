@@ -7,8 +7,8 @@
     <ProjectGuid>{BE8465A3-F65A-4D0F-88FB-56062758922E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JarvinZip</RootNamespace>
-    <AssemblyName>JarvinZip</AssemblyName>
+    <RootNamespace>CL.IO.Zip</RootNamespace>
+    <AssemblyName>CL.IO.Zip</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>

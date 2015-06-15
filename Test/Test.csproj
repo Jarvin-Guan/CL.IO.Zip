@@ -57,9 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JarvinZip\CL.IO.ZIP.csproj">
+    <ProjectReference Include="..\CL.IO.Zip\CL.IO.Zip.csproj">
       <Project>{be8465a3-f65a-4d0f-88fb-56062758922e}</Project>
-      <Name>CL.IO.ZIP</Name>
+      <Name>CL.IO.Zip</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

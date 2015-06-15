@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CL.IO.ZIP;
+using CL.IO.Zip;
 using System.IO;
 using System.Diagnostics;
 
