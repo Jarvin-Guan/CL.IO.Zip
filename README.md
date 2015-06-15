@@ -1,5 +1,5 @@
-# JarvinZipLib
-JarvinZipLib is a Zip library written in C# for the .NET platform. it provide process delegate.
+# CL.IO.Zip
+CL.IO.Zip is a Zip library written in C# for the .NET platform. it provide process delegate.
 
 ## PackDirectory
 ###Statement:(class:ZipHandler)
