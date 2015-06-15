@@ -1,8 +1,15 @@
 # CL.IO.Zip
-CL.IO.Zip is a Zip library written in C# for the .NET platform. it provide process delegate.
+CL.IO.Zip 是一个基于SharpZipLib的一个压缩和解压的类库，提供给用户在.net环境下使用（VB.NET,C#..等等）当前最新版本为：V1.1.0 
 
-## PackDirectory
-###Statement:(class:ZipHandler)
+做任何操作之前，请使用单例模式，获取ZipHandler对象。
+
+  <code>ZipHandler handler = ZipHandler.GetInstance();</code>
+
+
+##1.压缩
+
+### 1.1压缩整个文件夹，并且得到压缩进度。
+#### Method：PackDirectory (class:ZipHandler)
   <code>public static void PackFileDirectory(string strDirectory, string zipedFile, PackProcessChange changedDG)</code>
 
 ### Use:
