@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CL.IO.Zip;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
 
 namespace Test
@@ -24,41 +25,52 @@ namespace Test
         private string DicName { set; get; }
         private string tempPath { set; get; }
         [TestMethod]
+        public void PackDirectoryTest()
+        {
+            string fromDic = this.DebugPath + this.DicName;
+            string toZip = this.tempPath + this.FileName;
+            if(File.Exists(toZip))
+            {
+                File.Delete(toZip);
+            }
+            double percent = 0;
+            handler.PackDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); percent = num; });
+            Assert.IsTrue(File.Exists(toZip));
+            Assert.IsTrue(percent == 100);
+            File.Delete(toZip);
+        }
+        [TestMethod]
         public void AddFileTest ()
         {
-            string targetZipPath = this.tempPath +  this.FileName;
-            if (!File.Exists(targetZipPath))
+            string zipPath = this.tempPath +  this.FileName;
+            if (!File.Exists(zipPath))
             {
-                File.Copy(this.FileName, targetZipPath);
+                File.Copy(this.FileName, zipPath);
             }
             string filePath = this.DebugPath + this.FileName;
-            
-            handler.AddFile(filePath, targetZipPath, @"123\" + Path.GetFileName(filePath));
-            File.Delete(targetZipPath);
+            int count =handler.GetZipFileCount(zipPath);
+            handler.AddFile(filePath, zipPath, @"123\" + Path.GetFileName(filePath));
+            Assert.IsTrue(count+1==handler.GetZipFileCount(zipPath));
+            File.Delete(zipPath);
         }
         [TestMethod]
         public void AddDicTest()
         {
-            string targetZipPath = this.tempPath + this.FileName;
-            if (!File.Exists(targetZipPath))
+            string zipPath = this.tempPath + this.FileName;
+            if (!File.Exists(zipPath))
             {
-                File.Copy(this.FileName, targetZipPath);
+                File.Copy(this.FileName, zipPath);
             }
             string dicPath = this.DebugPath + this.DicName;
             handler.IsKeepPath = false;
-            handler.AddDirectory(dicPath, targetZipPath, Path.GetFileName(dicPath),
+            int count = handler.GetZipFileCount(zipPath);
+            handler.AddDirectory(dicPath, zipPath, Path.GetFileName(dicPath),
                 (num) => { Debug.WriteLine("压缩进度:" + num); });
-            File.Delete(targetZipPath);
+            Assert.IsTrue(count + Directory.GetFiles(dicPath,"*",SearchOption.AllDirectories).ToList().Count 
+                == handler.GetZipFileCount(zipPath));
+            File.Delete(zipPath);
         }
-        [TestMethod]
-        public void PackDirectoryTest()
-        {
-            string fromDic = this.DebugPath+  this.DicName;
-            string toZip = this.tempPath + this.FileName;
-            handler.PackFileDirectory(fromDic, toZip, (num) => { Debug.WriteLine("压缩进度:" + num); }); 
-            Assert.IsTrue(File.Exists(toZip));
-            File.Delete(toZip);
-        }
+        
 
         [TestMethod]
         public void UnPackTest()
@@ -67,6 +79,8 @@ namespace Test
             string toDic = this.tempPath + this.DicName;
             handler.IsKeepPath = true;
             handler.UnpackAll(fromZip, toDic, (num) => { Debug.WriteLine("解压进度:" + num); });
+            Assert.IsTrue(Directory.GetFiles(toDic, "*", SearchOption.AllDirectories).ToList().Count
+                == handler.GetZipFileCount(fromZip));
             Assert.IsTrue(Directory.Exists(toDic));
             Directory.Delete(toDic,true);
         }

@@ -88,8 +88,12 @@ namespace CL.IO.Zip
         /// <param name="zipedFile">Target zipFile Path</param>
         /// <param name="changedDG">report process delegate</param>
 
-        public void PackFileDirectory(string strDirectory, string zipedFile, ProcessChange changedDG)
+        public void PackDirectory(string strDirectory, string zipedFile, ProcessChange changedDG)
         {
+            if (!Directory.Exists(strDirectory))
+            {
+                throw new ArgumentException("需要压缩的文件夹不存在");
+            }
             using (System.IO.FileStream ZipFile = System.IO.File.Create(zipedFile))
             {
                 using (ZipOutputStream s = new ZipOutputStream(ZipFile))
@@ -188,7 +192,7 @@ namespace CL.IO.Zip
         public  void UnpackAll(string zipFilePath, string unzipPath, ProcessChange changedDG)
         {
             //总需要压缩的文件数量
-            double totalCount = GetZipFileSystemCount(zipFilePath);
+            double totalCount = GetZipFileCount(zipFilePath);
             string key = System.Guid.NewGuid().ToString(); //Guid Key
             ProcessItems.Add(key, new ProcessItem(totalCount));
             UnpackFiles(zipFilePath, unzipPath, changedDG, "*", key);
@@ -301,11 +305,11 @@ namespace CL.IO.Zip
                                 / ProcessItems[processItemKey].NeedHandleCount) * 100, 2);
         }
         /// <summary>
-        /// 获取压缩文件中含有的文件系统
+        /// 获取压缩文件中含有的文件数量
         /// </summary>
         /// <param name="zipPath"></param>
         /// <returns></returns>
-        public  int GetZipFileSystemCount(string zipPath)
+        public  int GetZipFileCount(string zipPath)
         {
             int result = 0;
             try
