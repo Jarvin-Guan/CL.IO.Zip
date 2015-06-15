@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace JarvinZip
+namespace CL.IO.ZIP
 {
 
     class ProcessItem

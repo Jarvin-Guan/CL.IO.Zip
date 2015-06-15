@@ -1,0 +1,5 @@
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\JarvinZip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\bin\Debug\JarvinZip.pdb
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\CL.IO.ZIP.csprojResolveAssemblyReference.cache
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\JarvinZip.dll
+Z:\Users\jarvin\git\JarvinZipLib\JarvinZip\obj\Debug\JarvinZip.pdb

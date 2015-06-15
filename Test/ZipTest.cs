@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using JarvinZip;
+using CL.IO.ZIP;
 using System.IO;
 using System.Diagnostics;
 
