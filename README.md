@@ -2,6 +2,7 @@
 	
 	
 ####&nbsp;&nbsp;&nbsp;&nbsp;CL.IO.Zip 是一个基于SharpZipLib的一个压缩和解压的类库，提供给用户在.net环境下使用（VB.NET,C#..等等）当前最新版本为：V1.1.0 
+百度网盘下载地址：http://pan.baidu.com/s/1dDnQuml#path=%252F
 
 <br>&nbsp;&nbsp;&nbsp;&nbsp;做任何操作之前，请使用单例模式，获取ZipHandler对象。
 
