@@ -13,9 +13,9 @@ namespace Test
         public ZipTest()
         {
             this.DebugPath = Path.GetDirectoryName(typeof(ZipTest).Assembly.Location)+"\\";
-            this.FileName =  @"Zipfile.zip";
-            this.DicName =  @"ZipDIC";
-            this.tempPath = this.DebugPath+@"tmp\";
+            this.FileName =  @"Zipfile.zip"; //sd
+            this.DicName =  @"ZipDIC"; 
+            this.tempPath = this.DebugPath+@"tmp\"; 
         }
 
         ZipHandler handler = ZipHandler.GetInstance();
